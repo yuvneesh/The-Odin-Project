@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let married = false
+        let age = 20
+
+        console.log(`We allow two types of people:
+        1. Married people over the age of 25
+        2. Unmarried people under the age 21
+        `)
+        console.log(`Person A... Married: ${married}, Age: ${age}
+        
+        `)
+        
+        console.log("Type 1")
+        if (married && age > 25){
+            console.log("Allowed")
+        } else if (!married && age<21) {
+            console.log("Allowed")
+        } else {
+            console.log("Not allowed")
+        }
+
+        console.log(`
+        
+        `)
+
+        console.log("Type 2")
+        if (married && age>25) {
+            console.log("Allowed")
+        } else if (!(married || age>=21)) {
+            console.log("Allowed")
+        } else {
+            console.log("Not allowed")
+        }
+
+    </script>
+</body>
+</html>
