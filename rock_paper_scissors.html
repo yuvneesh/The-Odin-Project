@@ -8,29 +8,69 @@
 <body>
     <h1>Rock Paper Scissors - Best of 5</h1>
     <button onclick="playGame()">Let's play</button>
+    <div id="Scores"> <br>Scores<br>
+        <div id="gamesPlayed">Games Played: 0</div>
+        <div id="userScore">  User score:   0</div>
+        <div id="pcScore">    PC score:     0</div>
+    </div>
     <script>
-        function playGame(){
-            let user_input = prompt("Please make a choice")
-            let random_number = Math.random()
-            let my_input
-    
-            switch (random_number) {
-                case 0 <= random_number <= 0.3: 
-                    my_input = "Rock"
+
+        function choiceToString(input_num){
+            let choice_string
+
+            switch (input_num) {
+                case 0: 
+                    choice_string = "Rock"
                     break
-                case 0.3 < random_number <= 0.6:
-                    my_input = "Paper"
+                case 1:
+                    choice_string = "Paper"
                     break
-                case 0.6 < random_number:
-                    my_input = "Scissors"
+                case 2:
+                    choice_string = "Scissors"
             }
 
-            judge(user_input, my_input)
+            return choice_string
+        }
+
+        function getMyChoice(){
+            let random_number = parseInt(Math.random()*10)
+            let random_choice = random_number%3
+            return random_choice
+        }
+
+        function getUserChoice(){
+            let user_input = parseInt(prompt("Please make a choice. Enter 0 for Rock, 1 for Paper, 2 for Scissors"))
+            if (user_input < 0){
+                user_input = 0
+            } else if (user_input > 2){
+                user_input = 2
+            }
+            return user_input
+            }
+
+        function playGame(){
+            let user_input = getUserChoice()
+            let my_input = getMyChoice()
+
+            result = judge(user_input, my_input)
+            alert(result)
         }
 
 
         function judge(user_input, my_input) {
-            alert("You lose!")
+            let result
+            let difference = my_input - user_input
+
+            if (difference === 0){
+                result = `We both chose ${choiceToString(user_input)}. Its a tie`
+            }
+            else if (difference === 1 || difference === -2){
+                result = `You chose ${choiceToString(user_input)}, I chose ${choiceToString(my_input)}. I won!!`
+            } else {
+                result = `You were lucky to choose ${choiceToString(user_input)} as I chose ${choiceToString(my_input)}. You win this time...`
+            }
+
+            return result
         }
 
     </script>
