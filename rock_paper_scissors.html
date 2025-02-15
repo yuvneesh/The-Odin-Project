@@ -6,14 +6,18 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Rock Paper Scissors - Best of 5</h1>
+    <h1>Rock Paper Scissors</h1>
     <button onclick="playGame()">Let's play</button>
+    <button onclick="resetStats()">Reset Stats</button>
     <div id="Scores"> <br>Scores<br>
         <div id="gamesPlayed">Games Played: 0</div>
         <div id="userScore">  User score:   0</div>
         <div id="pcScore">    PC score:     0</div>
     </div>
     <script>
+        let user_wins = 0
+        let pc_wins = 0
+        let games_played = 0
 
         function choiceToString(input_num){
             let choice_string
@@ -49,11 +53,13 @@
             }
 
         function playGame(){
+            games_played++
             let user_input = getUserChoice()
             let my_input = getMyChoice()
 
             result = judge(user_input, my_input)
             alert(result)
+            update_scoreboard()
         }
 
 
@@ -65,14 +71,28 @@
                 result = `We both chose ${choiceToString(user_input)}. Its a tie`
             }
             else if (difference === 1 || difference === -2){
+                pc_wins++
                 result = `You chose ${choiceToString(user_input)}, I chose ${choiceToString(my_input)}. I won!!`
             } else {
+                user_wins++
                 result = `You were lucky to choose ${choiceToString(user_input)} as I chose ${choiceToString(my_input)}. You win this time...`
             }
 
             return result
         }
 
+        function update_scoreboard(){
+            document.getElementById("gamesPlayed").innerText = `Games Played:    ${games_played}`
+            document.getElementById("userScore").innerText = `User Score:    ${user_wins}`
+            document.getElementById("pcScore").innerText = `PC Score:    ${pc_wins}`
+        }
+
+        function resetStats(){
+            games_played = 0
+            user_wins = 0
+            pc_wins = 0
+            update_scoreboard()
+        }
     </script>
 </body>
 </html>
