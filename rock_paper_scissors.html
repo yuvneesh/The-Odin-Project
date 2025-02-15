@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <title>Document</title>
 </head>
 <body>
     <h1>Rock Paper Scissors</h1>
     <button onclick="playGame()">Let's play</button>
     <button onclick="resetStats()">Reset Stats</button>
-    <div id="Scores"> <br>Scores<br>
+    <button onclick="setupAutoplay()">Auto-play</button>
+    <div id="Scores"> <h3><br>Scores<br></h3>
         <div id="gamesPlayed">Games Played: 0</div>
         <div id="userScore">  User score:   0</div>
         <div id="pcScore">    PC score:     0</div>
     </div>
+
+    <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
     <script>
+        let rounds = 0
         let user_wins = 0
         let pc_wins = 0
         let games_played = 0
@@ -52,13 +57,25 @@
             return user_input
             }
 
-        function playGame(){
+        function playGame(auto=false, fixed_choice=null){
             games_played++
-            let user_input = getUserChoice()
+            let user_input
+            if (auto) {
+                if (fixed_choice === null){
+                    user_input = getMyChoice()
+                } else {
+                    user_input = fixed_choice
+                }
+                
+            } else{
+                user_input = getUserChoice()
+            }
+            
             let my_input = getMyChoice()
 
             result = judge(user_input, my_input)
-            alert(result)
+
+            if (!auto) {alert(result)}
             update_scoreboard()
         }
 
@@ -85,14 +102,59 @@
             document.getElementById("gamesPlayed").innerText = `Games Played:    ${games_played}`
             document.getElementById("userScore").innerText = `User Score:    ${user_wins}`
             document.getElementById("pcScore").innerText = `PC Score:    ${pc_wins}`
+
+            xyValues.push({x: games_played, y:user_wins/games_played})
+            ratio_chart.update()
+            
         }
 
         function resetStats(){
             games_played = 0
             user_wins = 0
             pc_wins = 0
+            xyValues.length = 0
             update_scoreboard()
         }
+
+        function setupAutoplay(){
+            resetStats()
+            let count = 100
+            let strategy = parseInt(prompt("Pick Strategy: Enter 0 for random choices, Enter 1 for fixed choice"))
+            let fixed_choice = null
+
+            if (strategy === 1){
+                fixed_choice = parseInt(prompt("Choose your fixed choice. Enter 0 for Rock, 1 for Paper, 2, for Scissors"))
+            }
+
+            while (games_played < count){
+                playGame(auto=true, fixed_choice=fixed_choice)
+            }
+
+            rounds++
+        }
+
+        // Charting
+        var xyValues = [];
+
+        let ratio_chart = new Chart("myChart", {
+        type: "scatter",
+        data: {
+            datasets: [{
+            pointRadius: 4,
+            pointBackgroundColor: "rgb(0,0,255)",
+            data: xyValues
+            }]
+        },
+        options: {
+            title: {display: true, text: "Win ratio as a function of games played"},
+            legend: {display: false},
+            scales: {
+            xAxes: [{ticks: {min: 0, max:100}}],
+            yAxes: [{ticks: {min: 0, max:1}}],
+            }
+        }
+        });
+
     </script>
 </body>
 </html>
