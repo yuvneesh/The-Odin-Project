@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Rock Paper Scissors - Best of 5</h1>
+    <button onclick="playGame()">Let's play</button>
+    <script>
+        function playGame(){
+            let user_input = prompt("Please make a choice")
+            let random_number = Math.random()
+            let my_input
+    
+            switch (random_number) {
+                case 0 <= random_number <= 0.3: 
+                    my_input = "Rock"
+                    break
+                case 0.3 < random_number <= 0.6:
+                    my_input = "Paper"
+                    break
+                case 0.6 < random_number:
+                    my_input = "Scissors"
+            }
+
+            judge(user_input, my_input)
+        }
+
+
+        function judge(user_input, my_input) {
+            alert("You lose!")
+        }
+
+    </script>
+</body>
+</html>
