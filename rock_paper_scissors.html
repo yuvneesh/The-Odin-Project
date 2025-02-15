@@ -137,23 +137,47 @@
         var xyValues = [];
 
         let ratio_chart = new Chart("myChart", {
-        type: "scatter",
-        data: {
-            datasets: [{
-            pointRadius: 4,
-            pointBackgroundColor: "rgb(0,0,255)",
-            data: xyValues
-            }]
-        },
-        options: {
-            title: {display: true, text: "Win ratio as a function of games played"},
-            legend: {display: false},
-            scales: {
-            xAxes: [{ticks: {min: 0, max:100}}],
-            yAxes: [{ticks: {min: 0, max:1}}],
+            type: "scatter",
+            data: {
+                datasets: [{
+                    pointRadius: 4,
+                    pointBackgroundColor: "rgb(0,0,255)",
+                    data: xyValues
+                }]
+            },
+            options: {
+                title: {
+                    display: true, 
+                    text: "Win ratio as a function of games played"
+                },
+                legend: { 
+                    display: false 
+                },
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            min: 0, 
+                            max: 100
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Games played'
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            min: 0, 
+                            max: 1
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Users win percentage'
+                        }
+                    }]
+                }
             }
-        }
         });
+        
 
     </script>
 </body>
